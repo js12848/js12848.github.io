@@ -1,24 +1,24 @@
-        h1{
-            color: orange;
-        }
+h1{
+    color: orange;
+}
 
-        body {
-            background: darkblue;
-        }
+body {
+    background: darkblue;
+}
 
-        p {
-            background-color: white;
-            color: pink;
-            border: solid 10px;
-            padding: 4vw;
-        }
+p {
+    background-color: white;
+    color: pink;
+    border: solid 10px;
+    padding: 4vw;
+}
 
-        #special {
-            color: darkorange;
-            padding: 100px;
-        }
+#special {
+    color: darkorange;
+    padding: 100px;
+}
 
-        .theDescription {
-            background-color: green;
-            margin: 50px;
-        }
+.theDescription {
+    background-color: green;
+    margin: 50px;
+}
