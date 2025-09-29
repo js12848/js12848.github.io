@@ -1,0 +1,22 @@
+
+
+.container{ max-width: 
+    900px; 
+    margin: 0 auto; 
+    padding: 24px; 
+}
+
+.site-header {
+    background: rgb(75, 102, 103);
+    color: white;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12); 
+}
+
+
+.container.navbar .nav a {
+  color:#e9eeff;
+  text-decoration:underline;
+  text-underline-offset:6px; text-decoration-thickness:2px;
+  padding:6px 0;
+}
+
