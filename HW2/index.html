@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Web Dev Week 2 Reflections</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=arrow_drop_down" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,8 +13,16 @@
     <h1 class="brand">Web Dev Week 2 Reflections</h1>
     <nav class="nav">
       <a href="../index.html">Home</a>
-      <a href="../week01/hw1.html">Week 1</a>
-      <a href="index.html" aria-current="page">Week 2</a>
+      <details class="dropdown">
+        <summary class="nav-link dropdown-toggle" >
+          Weeks
+          <!-- <span class="material-symbols-outlined">arrow_drop_down</span> -->
+        </sumary>
+        <ul class="menu">
+          <li><a href="../week01/hw1.html">Week 1</a></li>
+          <li><a href="index.html" aria-current="page">Week 2</a></li>
+        </ul>
+      </details>
     </nav>
   </div>
 </header>
@@ -28,13 +37,13 @@
     <article class="card">
       <h3>Mozilla Manifesto Reflections</h3>
       <p>A short reflection on Mozilla.</p>
-      <a class="btn btn-rect" href="mozilla.html">Read More</a>
+      <a class="btn btn-rect" href="mozilla.html">Details</a>
     </article>
 
     <article class="card">
       <h3>Long Live the Web Reflection</h3>
       <p>A reflection on “Long Live the Web” by Tim Berners-Lee.</p>
-      <a class="btn btn-rect" href="longlive.html">Read More</a>
+      <a class="btn btn-rect" href="longlive.html">Details</a>
     </article>
   </section>
 </main>
