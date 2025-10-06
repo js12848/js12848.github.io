@@ -1,0 +1,109 @@
+
+
+
+body {
+    margin: 0;
+    background-color: pink;
+    /* what font on the google font api best matches rand's design?
+    how can you find it? */
+    font-family: "Oswald", sans-serif;
+}
+
+main{
+    background-color: rgb(124, 150, 185);
+    display: block;
+    border: 3px solid;
+    position: relative;
+    margin: 4vh auto;
+    overflow: hidden;
+    aspect-ratio:2/3;  
+}
+
+main p{
+  margin:0;
+  line-height:.8;
+}
+
+div {
+    /* background-color: blue; */
+    padding: 3vw;
+    margin: 3vw;
+    font-size: 20vw;
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+}
+
+main > div:first-child{             
+  position:absolute; inset:0;
+  z-index:2;                      
+}
+
+main > div:first-child p{
+  position:absolute;
+  color:black;
+  font-family: "Oswald", sans-serif;
+  font-weight:700;
+  font-size:48vmin;                
+}
+
+#theFront, #theBackward{ position:absolute; inset:0; }
+
+#theFront p{
+    position: absolute;
+    color: black;
+    display: block;
+    font-family: "Oswald", sans-serif;
+    font-size: 32vmin;
+    font-weight:500;
+    transform: scaleY(2);
+
+}
+
+#theFront p:nth-child(1){
+    top: 15vh;  left: 10vw; 
+}
+
+#theFront p:nth-child(2){
+    top: 30vh;  left: 25vw; 
+}
+
+#theFront p:nth-child(3){
+    top: 10vh;  left: 40vw; 
+}
+
+#theFront p:nth-child(4){
+    top: 50vh;  left: 55vw; 
+}
+
+#theBackward p{
+    position: absolute;
+    transform: scaleX(2) rotate(90deg);
+    color: white;
+    display: block;
+    font-family: "Oswald", sans-serif;
+    font-size: 32vmin;
+    font-weight:500;
+    
+}
+
+#theBackward p:nth-child(1){
+    top: 10vh;  left: 50vw; 
+}
+
+#theBackward p:nth-child(2){
+    top: 30vh;  left: 25vw; 
+}
+
+#theBackward p:nth-child(3){
+    top: 60vh;  left: 50vw; 
+}
+
+#theBackward p:nth-child(4){
+    top: 80vh;  left: 25vw; 
+}
+
+
+
+
