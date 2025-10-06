@@ -9,7 +9,7 @@ body {
     font-family: "Oswald", sans-serif;
     width: 1920px;
     height: 1800px;
-    display: flex;
+    place-items: center;
 
 }
 
@@ -47,26 +47,26 @@ div {
     display: block;
     font-family: "Oswald", sans-serif;
     font-size: 32vmin;
-    font-weight:500;
+    font-weight:700;
     transform: scaleY(2);
     z-index: 2;
 
 }
 
 #theFront p:nth-child(1){
-    top: 25vh;  left: 10vw; 
+    top: 35vh;  left: 15vw; 
 }
 
 #theFront p:nth-child(2){
-    top: 55vh;  left: 25vw; 
+    top: 55vh;  left: 30vw; 
 }
 
 #theFront p:nth-child(3){
-    top: 10vh;  left: 40vw; 
+    top: 30vh;  left: 45vw; 
 }
 
 #theFront p:nth-child(4){
-    top: 50vh;  left: 55vw; 
+    top: 80vh;  left: 60vw; 
 }
 
 #theBackward p{
@@ -76,7 +76,7 @@ div {
     display: block;
     font-family: "Oswald", sans-serif;
     font-size: 32vmin;
-    font-weight:500;
+    font-weight:700;
     z-index: 1;
     
 }
