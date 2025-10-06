@@ -21,6 +21,8 @@ main{
     margin: 4vh auto;
     overflow: hidden;
     aspect-ratio:2/3;  
+    width: 1200px;
+    height: 1800px;
 }
 
 main p{
