@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="response_style.css" />
+</head>
+<body>
+    <header class="site-header">
+    <div class="container navbar">
+      <h1 class="brand">Ways of Seeing — Response</h1>
+      <nav class="nav">
+        <a href="../index.html">Home</a>
+        <a href="./index.html" aria-current="page">Week 4</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container spread">
+    <section class="page page--left" id="overview">
+      <h2 class="title">Framing the Eye</h2>
+      <p class="lede">
+        Berger argues that seeing is never neutral; the frame, caption, and context pre-load meaning.
+        I echo my McLuhan response by treating the layout as the message.
+      </p>
+
+      <figure class="hero">
+        <img src="https://picsum.photos/seed/berger/900/620" alt="Placeholder artwork" />
+        <figcaption>Same image, different containers → different readings.</figcaption>
+      </figure>
+
+      <div class="sticker" aria-hidden="true">👁 curated</div>
+    </section>
+
+    <section class="page page--right" id="response">
+      <blockquote class="pull">
+        “The relation between what we see and what we know is never settled.”
+        <cite>— John Berger</cite>
+      </blockquote>
+
+      <article class="essay">
+        <h3>Container = Meaning</h3>
+        <p>
+          In a museum, labels and frames discipline vision; in feeds, the algorithm does.
+          Changing the <em>container</em> (caption, crop, order) changes the meaning—McLuhan’s
+          “medium is the message,” rendered in Berger’s gallery.
+        </p>
+        <p>
+          Below, the same image is re-captioned three ways to show how language and purchase cues
+          shift value: authority, scarcity, relatability.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <section class="container gallery" id="gallery">
+    <figure class="card">
+      <img src="https://picsum.photos/seed/a/640/420" alt="Placeholder A" />
+      <figcaption>“Authentic masterpiece.” <span class="tag">Authority</span></figcaption>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/b/640/420" alt="Placeholder B" />
+      <figcaption>“Edition closes tonight.” <span class="tag">Scarcity</span></figcaption>
+    </figure>
+    <figure class="card">
+      <img src="https://picsum.photos/seed/c/640/420" alt="Placeholder C" />
+      <figcaption>“Shot on phone.” <span class="tag">Relatability</span></figcaption>
+    </figure>
+  </section>
+
+  <section class="container code-block">
+    <h3>Adjacent Code: caption swap pattern</h3>
+    <p class="muted">Small CSS nudges act like “curation”—they steer how long we look.</p>
+  </section>
+
+  <footer class="site-footer container">
+    <p>References: John Berger, <em>Ways of Seeing</em> (1972).</p>
+  </footer>
+
+</body>
+</html>
