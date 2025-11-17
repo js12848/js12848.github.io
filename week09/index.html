@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Social Dilemma</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header class="site-header">
+      <h1 class="title">The Social Dilemma — Personalized Screen</h1>
+    </header>
+
+    <section class="laptop" aria-label="Computer Screen Mockup">
+      <div class="bezel">
+        <div class="topbar">
+          <button id="btnRefresh" class="refresh" aria-label="Refresh feed">REFRESH</button>
+          <div class="address">
+            <span class="dot"></span>
+            <span class="bar">social.example/feed</span>
+          </div>
+          <div class="profile" id="profile">
+            <div class="avatar" aria-hidden="true">👤</div>
+            <span class="username" id="username">user.000</span>
+          </div>
+        </div>
+
+        <div class="screen">
+          <img id="feedImage" class="feed-image" alt="Personalized content" />
+          <div class="meta">
+            <span id="imgLabel" class="label"></span>
+            <span class="pill">recommended for you</span>
+          </div>
+        </div>
+      </div>
+
+      <figcaption class="caption">
+        "Every user see custominzed thing, we are rarely ever on the same page"
+      </figcaption>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
