@@ -34,13 +34,11 @@ body {
   background: radial-gradient(circle at 0 0, #e5e7eb, #f9fafb 60%);
 }
 
-/* Layout */
 .page {
   display: flex;
   min-height: 100vh;
 }
 
-/* Sidebar (Peacefulness bar) */
 .sidebar {
   width: 240px;
   padding: 18px 16px;
@@ -57,7 +55,6 @@ body {
   top: 12px;
 }
 
-/* Brand */
 .brand {
   display: flex;
   align-items: center;
@@ -148,14 +145,12 @@ body {
   background: #4ade80;
 }
 
-/* Main area */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Top bar */
 .topbar {
   display: flex;
   align-items: center;
@@ -185,7 +180,6 @@ body {
   color: var(--muted);
 }
 
-/* User badge */
 .user-badge {
   display: flex;
   align-items: center;
@@ -225,7 +219,6 @@ body {
   font-size: 0.9rem;
 }
 
-/* Content */
 .content {
   padding: 18px 24px 24px;
   max-width: 960px;
@@ -237,7 +230,6 @@ body {
   color: var(--muted);
 }
 
-/* Thread & comments */
 .thread {
   background: var(--bg-soft);
   border-radius: var(--radius-lg);
@@ -286,7 +278,6 @@ body {
   font-size: 0.7rem;
 }
 
-/* Comment list */
 .comment-list {
   list-style: none;
   margin: 0;
@@ -307,7 +298,6 @@ body {
   margin-top: 4px;
 }
 
-/* Comment content */
 .comment-main {
   min-width: 0;
 }
@@ -376,7 +366,6 @@ body {
   color: #111827;
 }
 
-/* Comment footer */
 .comment-footer {
   display: flex;
   align-items: center;
@@ -405,7 +394,6 @@ body {
   border-radius: 999px;
 }
 
-/* Delete button */
 .delete-btn {
   border: 1px solid var(--danger);
   background: var(--danger-soft);
@@ -433,7 +421,6 @@ body {
   box-shadow: var(--shadow-small);
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .page {
     flex-direction: column;
