@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Toxic Forum Cleanup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <!-- Left Peacefulness Bar -->
+    <aside class="sidebar">
+      <div class="sidebar-inner">
+        <div class="brand">
+          <div class="brand-dot"></div>
+          <span class="brand-name">CleanNet</span>
+        </div>
+
+        <h2 class="sidebar-title">Peacefulness</h2>
+        <div class="peace-bar">
+          <div class="peace-fill" id="peaceFill"></div>
+        </div>
+        <p class="peace-label">
+          <span id="peacePercent">0</span>% clean
+        </p>
+        <p class="peace-hint">Remove toxic posts to make this space calmer.</p>
+
+        <div class="sidebar-stats">
+          <p class="sidebar-stat-line"><span class="dot red"></span> Toxic posts</p>
+          <p class="sidebar-stat-line"><span class="dot green"></span> Removed by you</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="logo">Community Feed</h1>
+          <span class="logo-tag">moderation dashboard</span>
+        </div>
+
+        <div class="user-badge">
+          <div class="avatar">M</div>
+          <div class="user-text">
+            <div class="user-role">Manager</div>
+            <div class="user-name">001</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+
+        <section class="thread">
+          <header class="thread-header">
+            <div>
+              <h2 class="thread-title">Why is everyone so mad online?</h2>
+              <p class="thread-subtitle">
+                Public · General discussion · <span id="postCountLabel">5 posts</span>
+              </p>
+            </div>
+            <button class="filter-btn" type="button">Sort: Newest</button>
+          </header>
+
+          <ul class="comment-list" id="commentList">
+            <!-- Comment 1 -->
+            <li class="comment">
+              <div class="comment-main">
+                <div class="comment-top">
+                  <div class="comment-avatar">G</div>
+                  <div>
+                    <div class="comment-user-row">
+                      <span class="comment-user">user_ghost</span>
+                      <span class="comment-handle">@ghostly</span>
+                    </div>
+                    <div class="comment-meta">
+                      <span class="comment-time">Today · 13:04</span>
+                      <span class="comment-dot">·</span>
+                      <span class="comment-tag">reply</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-body">
+                  This take is so d*** bad. Do you even think before you post?
+                </p>
+                <div class="comment-footer">
+                  <button class="icon-btn" type="button">👍 3</button>
+                  <button class="icon-btn" type="button">💬 Reply</button>
+                  <span class="flag-text">Marked as toxic</span>
+                </div>
+              </div>
+              <button class="delete-btn">Delete</button>
+            </li>
+
+            <!-- Comment 2 -->
+            <li class="comment">
+              <div class="comment-main">
+                <div class="comment-top">
+                  <div class="comment-avatar">S</div>
+                  <div>
+                    <div class="comment-user-row">
+                      <span class="comment-user">salty_cat</span>
+                      <span class="comment-handle">@salted</span>
+                    </div>
+                    <div class="comment-meta">
+                      <span class="comment-time">Today · 13:09</span>
+                      <span class="comment-dot">·</span>
+                      <span class="comment-tag">reply</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-body">
+                  Bro just shut up already, this is the dumbest s*** I’ve read all day.
+                </p>
+                <div class="comment-footer">
+                  <button class="icon-btn" type="button">👍 1</button>
+                  <button class="icon-btn" type="button">💬 Reply</button>
+                  <span class="flag-text">Marked as toxic</span>
+                </div>
+              </div>
+              <button class="delete-btn">Delete</button>
+            </li>
+
+            <!-- Comment 3 -->
+            <li class="comment">
+              <div class="comment-main">
+                <div class="comment-top">
+                  <div class="comment-avatar">E</div>
+                  <div>
+                    <div class="comment-user-row">
+                      <span class="comment-user">edge_lord99</span>
+                      <span class="comment-handle">@edgy</span>
+                    </div>
+                    <div class="comment-meta">
+                      <span class="comment-time">Today · 13:15</span>
+                      <span class="comment-dot">·</span>
+                      <span class="comment-tag">reply</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-body">
+                  Lmao you’re such a f***ing clown. Touch some grass or something.
+                </p>
+                <div class="comment-footer">
+                  <button class="icon-btn" type="button">👍 5</button>
+                  <button class="icon-btn" type="button">💬 Reply</button>
+                  <span class="flag-text">Marked as toxic</span>
+                </div>
+              </div>
+              <button class="delete-btn">Delete</button>
+            </li>
+
+            <!-- Comment 4 -->
+            <li class="comment">
+              <div class="comment-main">
+                <div class="comment-top">
+                  <div class="comment-avatar">N</div>
+                  <div>
+                    <div class="comment-user-row">
+                      <span class="comment-user">no_chill</span>
+                      <span class="comment-handle">@nochill</span>
+                    </div>
+                    <div class="comment-meta">
+                      <span class="comment-time">Today · 13:22</span>
+                      <span class="comment-dot">·</span>
+                      <span class="comment-tag">reply</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-body">
+                  Imagine posting this and thinking it’s a good idea… what a joke a** move.
+                </p>
+                <div class="comment-footer">
+                  <button class="icon-btn" type="button">👍 0</button>
+                  <button class="icon-btn" type="button">💬 Reply</button>
+                  <span class="flag-text">Marked as toxic</span>
+                </div>
+              </div>
+              <button class="delete-btn">Delete</button>
+            </li>
+
+            <!-- Comment 5 -->
+            <li class="comment">
+              <div class="comment-main">
+                <div class="comment-top">
+                  <div class="comment-avatar">C</div>
+                  <div>
+                    <div class="comment-user-row">
+                      <span class="comment-user">capslockRAGE</span>
+                      <span class="comment-handle">@allcaps</span>
+                    </div>
+                    <div class="comment-meta">
+                      <span class="comment-time">Today · 13:30</span>
+                      <span class="comment-dot">·</span>
+                      <span class="comment-tag">reply</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="comment-body">
+                  You people are all clueless. This whole thread is a dumpster f***.
+                </p>
+                <div class="comment-footer">
+                  <button class="icon-btn" type="button">👍 2</button>
+                  <button class="icon-btn" type="button">💬 Reply</button>
+                  <span class="flag-text">Marked as toxic</span>
+                </div>
+              </div>
+              <button class="delete-btn">Delete</button>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
