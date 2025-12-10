@@ -1,18 +1,44 @@
-// Minimal scroll-speed feed: modes + panic infinite scroll
 (function () {
-  let lastY = window.scrollY;
-  let lastT = performance.now();
+  const SPEED = {
+    calmThreshold: 0.25,
+    rushThreshold: 1.2,
+    glitchThreshold: 1.6,
+    panicTrigger: 1.8,
+    smoothing: 0.3
+  };
 
-  const CALM_THRESHOLD = 0.3;  // px per ms
-  const RUSH_THRESHOLD = 0.8;
+  const PANIC = {
+    duration: 1600,
+    scrollSpeed: 3.5,
+    cooldown: 4000
+  };
 
-  const body = document.body;
-  const speedValueEl = document.getElementById("speed-value");
-  const speedBarEl = document.getElementById("speed-bar");
-  const speedCaptionEl = document.getElementById("speed-caption");
-  const modePill = document.getElementById("mode-pill");
-  const modeLabel = document.getElementById("mode-label");
-  const feedEl = document.getElementById("feed");
+  const DOM = {
+    body: document.body,
+    speedValue: document.getElementById("speed-value"),
+    speedBar: document.getElementById("speed-bar"),
+    speedCaption: document.getElementById("speed-caption"),
+    modePill: document.getElementById("mode-pill"),
+    modeLabel: document.getElementById("mode-label"),
+    feed: document.getElementById("feed")
+  };
+
+  const state = {
+    lastY: window.scrollY,
+    lastT: performance.now(),
+    speed: 0,
+    mode: "neutral",
+    ticking: false,
+    nextPostIndex: 0,
+    panic: {
+      active: false,
+      start: 0,
+      end: 0,
+      cooldownUntil: 0
+    }
+  };
+
+  const panicLoaderEl = createPanicLoader();
 
   const posts = [
     {
@@ -21,7 +47,10 @@
       body: "Cards stay crisp when you linger.",
       type: "calm",
       tags: { calm: "Focus", neutral: "Steady", rush: "Too Slow" },
-      comments: { full: "👀 still here; comments stay open.", emoji: "👀…" },
+      comments: {
+        full: "Still here; comments stay open when you slow down.",
+        emoji: ""
+      },
       likes: { calm: 2400, neutral: 1500, rush: 420 }
     },
     {
@@ -29,8 +58,11 @@
       title: "Rushing past everything",
       body: "",
       type: "rushy",
-      tags: { calm: "Pause?", neutral: "Skim", rush: "🔥 Trending" },
-      comments: { full: "💨 comments collapse as you zip.", emoji: "💨💨" },
+      tags: { calm: "Pause?", neutral: "Skim", rush: "Trending" },
+      comments: {
+        full: "Comments collapse as you zip past the feed.",
+        emoji: ""
+      },
       likes: { calm: 420, neutral: 1100, rush: 2300 }
     },
     {
@@ -39,7 +71,10 @@
       body: "Skim-speed keeps things balanced.",
       type: "balanced",
       tags: { calm: "In Focus", neutral: "Normal", rush: "Keep Moving" },
-      comments: { full: "🙂 skimmable thread stays light.", emoji: "👉🙂👉" },
+      comments: {
+        full: "A skimmable thread stays light at this pace.",
+        emoji: ""
+      },
       likes: { calm: 1200, neutral: 1700, rush: 1350 }
     },
     {
@@ -48,7 +83,10 @@
       body: "Text sharpens when you stay.",
       type: "calm",
       tags: { calm: "Clear", neutral: "Readable", rush: "Skipping" },
-      comments: { full: "🔍 extra context shows up.", emoji: "🔍…" },
+      comments: {
+        full: "Extra context shows up when you slow down.",
+        emoji: ""
+      },
       likes: { calm: 2600, neutral: 1500, rush: 580 }
     },
     {
@@ -57,7 +95,10 @@
       body: "Label swaps mirror your speed.",
       type: "balanced",
       tags: { calm: "Invite", neutral: "Live", rush: "Pushy" },
-      comments: { full: "♻️ labels flip as you speed up.", emoji: "⚡️🌀" },
+      comments: {
+        full: "Labels flip as you speed up or slow down.",
+        emoji: ""
+      },
       likes: { calm: 1500, neutral: 1600, rush: 900 }
     },
     {
@@ -66,7 +107,10 @@
       body: "",
       type: "rushy",
       tags: { calm: "Soft", neutral: "Standard", rush: "Loud" },
-      comments: { full: "📣 reactions get louder in rush.", emoji: "📣🔥" },
+      comments: {
+        full: "Reactions get louder the faster you move.",
+        emoji: ""
+      },
       likes: { calm: 600, neutral: 1200, rush: 2100 }
     },
     {
@@ -75,7 +119,10 @@
       body: "Short blips stay readable only when slowed.",
       type: "calm",
       tags: { calm: "Saved", neutral: "Blink", rush: "Gone" },
-      comments: { full: "🧊 pace keeps it chill.", emoji: "🧊" },
+      comments: {
+        full: "A slower pace keeps small details visible.",
+        emoji: ""
+      },
       likes: { calm: 1700, neutral: 900, rush: 320 }
     },
     {
@@ -84,7 +131,10 @@
       body: "",
       type: "rushy",
       tags: { calm: "Wait", neutral: "Incoming", rush: "Overflow" },
-      comments: { full: "🚨 panic loading spins up.", emoji: "🚨🚨" },
+      comments: {
+        full: "Panic loading spins up as you rush.",
+        emoji: ""
+      },
       likes: { calm: 480, neutral: 980, rush: 2400 }
     }
   ];
@@ -98,13 +148,16 @@
 
   const moodClassNames = ["mode-calm", "mode-neutral", "mode-rush"];
 
-  let currentSpeed = 0;
-  let currentMode = "neutral";
-  let ticking = false;
-  let nextPostIndex = 0;
-
   function formatLikes(num) {
     return num >= 1000 ? (num / 1000).toFixed(1) + "k" : String(num);
+  }
+
+  function createPanicLoader() {
+    const div = document.createElement("div");
+    div.id = "panic-loader";
+    div.textContent = "⚡ Panic loading…";
+    document.body.appendChild(div);
+    return div;
   }
 
   function createCard(post) {
@@ -133,7 +186,7 @@
       </div>
     `;
 
-    applyModeToCard(card, currentMode);
+    applyModeToCard(card, state.mode);
     setTimeout(() => card.classList.remove("slide-in"), 400);
     return card;
   }
@@ -155,19 +208,19 @@
     commentEmoji.textContent = card.dataset.commentEmoji;
     card.classList.toggle("comments-collapsed", mode === "rush");
 
-    // subtle global visual change per mode
-    card.style.opacity = mode === "rush" ? 0.9 : 1;
-    card.style.filter = mode === "rush" ? "blur(0.12px) saturate(1.05)" : "none";
+    card.style.opacity = mode === "rush" ? 0.96 : 1;
+    card.style.filter = mode === "rush" ? "saturate(1.05)" : "none";
+    card.classList.remove("glitchy");
   }
 
   function renderBatch(count) {
     const fragment = document.createDocumentFragment();
     for (let i = 0; i < count; i++) {
-      const post = posts[nextPostIndex % posts.length];
+      const post = posts[state.nextPostIndex % posts.length];
       fragment.appendChild(createCard(post));
-      nextPostIndex++;
+      state.nextPostIndex++;
     }
-    feedEl.appendChild(fragment);
+    DOM.feed.appendChild(fragment);
   }
 
   function refreshAllCards(mode) {
@@ -177,72 +230,202 @@
   }
 
   function setMode(mode) {
-    if (mode === currentMode) return;
-    currentMode = mode;
+    if (mode === state.mode) return;
+    state.mode = mode;
 
-    // update body class
-    moodClassNames.forEach((name) => body.classList.remove(name));
-    body.classList.add("mode-" + mode);
+    moodClassNames.forEach((name) => DOM.body.classList.remove(name));
+    DOM.body.classList.add("mode-" + mode);
 
-    // top pill + caption
-    modePill.dataset.mode = mode;
-    modeLabel.textContent =
+    DOM.modePill.dataset.mode = mode;
+    DOM.modeLabel.textContent =
       mode === "calm" ? "Calm" : mode === "rush" ? "Rush" : "Neutral";
-    speedCaptionEl.innerHTML = captionByMode[mode];
+    DOM.speedCaption.innerHTML = captionByMode[mode];
+
+    if (!state.panic.active) {
+      panicLoaderEl.classList.toggle("visible", mode === "rush");
+    }
 
     refreshAllCards(mode);
   }
 
   function maybeLoadMore() {
-    // rush mode loads more, earlier
-    const threshold = currentMode === "rush" ? 1200 : 360;
+    const threshold = state.mode === "rush" ? 1200 : 360;
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - threshold) {
-      const batchSize = currentMode === "rush" ? 6 : 3;
+      const batchSize = state.mode === "rush" ? 6 : 3;
       renderBatch(batchSize);
-      refreshAllCards(currentMode);
+      refreshAllCards(state.mode);
+
+      if (state.mode === "rush" && !state.panic.active) {
+        panicLoaderEl.classList.add("visible");
+        setTimeout(() => panicLoaderEl.classList.remove("visible"), 700);
+      }
     }
   }
 
-  function updateUI() {
-    ticking = false;
+  function scrambleCards(intensity = 1) {
+    const cards = document.querySelectorAll(".feed-card");
+    cards.forEach((card) => {
+      const angle = (Math.random() - 0.5) * 60 * intensity;
+      const offsetX = (Math.random() - 0.5) * 360 * intensity;
+      const offsetY = (Math.random() - 0.5) * 240 * intensity;
+      const scale = 1 + (Math.random() - 0.5) * 0.5 * intensity;
 
-    const clamped = Math.min(currentSpeed, 2);
-    const pct = (clamped / 2) * 100;
-    speedBarEl.style.width = pct.toFixed(1) + "%";
-    speedValueEl.textContent = currentSpeed.toFixed(2) + " px/ms";
+      card.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg) scale(${scale})`;
+      card.style.zIndex = 50 + Math.floor(Math.random() * 100);
+      card.style.opacity = 0.2 + Math.random() * 0.4;
+      card.style.filter = "contrast(1.2) grayscale(0.2)";
+    });
+  }
 
-    let mode = "neutral";
-    if (currentSpeed < CALM_THRESHOLD) mode = "calm";
-    else if (currentSpeed > RUSH_THRESHOLD) mode = "rush";
+  function startPanic() {
+    const now = performance.now();
 
-    setMode(mode);
+    if (state.panic.active) return;
+    if (now < state.panic.cooldownUntil) return;
+
+    state.panic.active = true;
+    state.panic.start = now;
+    state.panic.end = now + PANIC.duration;
+    state.panic.cooldownUntil = state.panic.end + PANIC.cooldown;
+
+    DOM.body.classList.add("panic");
+    panicLoaderEl.classList.add("visible");
+
+    setSpeedUI("MAX", 100, "<span>Overload</span>");
+
+    panicLoop();
+  }
+
+  function endPanic() {
+    state.panic.active = false;
+    DOM.body.classList.remove("panic");
+    panicLoaderEl.classList.remove("visible");
+    state.speed = 0;
+
+    document.querySelectorAll(".feed-card").forEach(resetCardStyles);
+  }
+
+  function panicLoop() {
+    if (!state.panic.active) return;
+    const now = performance.now();
+
+    if (now >= state.panic.end) {
+      endPanic();
+      return;
+    }
+
+    let t = (now - state.panic.start) / PANIC.duration;
+    t = Math.max(0, Math.min(1, t));
+    const intensity = Math.sin(Math.PI * t);
+
+    scrambleCards(intensity);
+
+    const nextY = window.scrollY + PANIC.scrollSpeed * 16;
+    window.scrollTo(0, nextY);
+
     maybeLoadMore();
+
+    requestAnimationFrame(panicLoop);
+  }
+
+  function updateUI() {
+    state.ticking = false;
+
+    if (state.panic.active) {
+      setSpeedUI("MAX", 100, "<span>Overload</span>");
+      return;
+    }
+
+    const pct = clampPercent(state.speed);
+    setSpeedUI(state.speed.toFixed(2) + " px/ms", pct, captionByMode[state.mode]);
+
+    const nextMode = computeMode(state.speed, state.mode);
+    setMode(nextMode);
+
+    const glitchOn =
+      state.speed > SPEED.glitchThreshold && state.mode === "rush";
+    toggleGlitch(glitchOn);
+
+    if (!state.panic.active && state.speed > SPEED.panicTrigger && state.mode === "rush") {
+      startPanic();
+      return;
+    }
+
+    maybeLoadMore();
+  }
+
+  function clampPercent(speed) {
+    const clamped = Math.min(speed, 2);
+    return ((clamped / 2) * 100).toFixed(1);
+  }
+
+  function setSpeedUI(text, percent, captionHtml) {
+    DOM.speedBar.style.width = percent + "%";
+    DOM.speedValue.textContent = text;
+    DOM.speedCaption.innerHTML = captionHtml;
+  }
+
+  function computeMode(speed, current) {
+    let mode = current;
+
+    if (mode === "neutral") {
+      if (speed < SPEED.calmThreshold) mode = "calm";
+      else if (speed > SPEED.rushThreshold) mode = "rush";
+    } else if (mode === "calm") {
+      if (speed > SPEED.calmThreshold * 1.4) mode = "neutral";
+    } else if (mode === "rush") {
+      if (speed < SPEED.rushThreshold * 0.7) mode = "neutral";
+    }
+
+    return mode;
+  }
+
+  function toggleGlitch(on) {
+    document.querySelectorAll(".feed-card").forEach((card) => {
+      card.classList.toggle("glitchy", on);
+    });
   }
 
   function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  // initial feed
+  function resetCardStyles(card) {
+    card.style.transform = "";
+    card.style.zIndex = "";
+    card.style.opacity = "";
+    card.style.filter = "";
+  }
+
   renderBatch(6);
-  refreshAllCards(currentMode);
-  speedCaptionEl.innerHTML = captionByMode[currentMode];
+  refreshAllCards(state.mode);
+  DOM.speedCaption.innerHTML = captionByMode[state.mode];
 
   window.addEventListener(
     "scroll",
     () => {
+      if (state.panic.active) {
+        state.lastY = window.scrollY;
+        state.lastT = performance.now();
+        return;
+      }
+
       const now = performance.now();
       const y = window.scrollY;
-      const dt = now - lastT || 1;
-      const dy = Math.abs(y - lastY);
+      const dt = now - state.lastT || 1;
+      const dy = Math.abs(y - state.lastY);
 
-      currentSpeed = dy / dt;
-      lastY = y;
-      lastT = now;
+      const instantSpeed = dy / dt;
 
-      if (!ticking) {
+      state.speed =
+        state.speed * (1 - SPEED.smoothing) + instantSpeed * SPEED.smoothing;
+
+      state.lastY = y;
+      state.lastT = now;
+
+      if (!state.ticking) {
         requestAnimationFrame(updateUI);
-        ticking = true;
+        state.ticking = true;
       }
     },
     { passive: true }
