@@ -7,48 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="mode-neutral">
-  <header>
-    <div class="top-bar">
-      <div class="top-left">
-        <div class="top-title">Re-Seeing the Web</div>
-        <div class="top-tagline">A feed that reacts to how fast you scroll.</div>
-      </div>
-      <div class="mode-pill" id="mode-pill" data-mode="neutral">
-        <span class="mode-dot"></span>
-        <div>
-          <div class="mode-label" id="mode-label">Neutral</div>
-          <div class="mode-extra" id="mode-extra">Listening</div>
-        </div>
-      </div>
+  <section class="landing">
+    <div class="landing-inner">
+      <p class="eyebrow">Web study</p>
+      <h1>Re-seeing the Web</h1>
+      <p class="landing-copy">
+        A scrolling field that shifts mood the faster you move. Drift in slowly or sprint through—each pace leaves a trace.
+      </p>
+      <p class="landing-sub">
+        Inspired by films like The Social Dilemma and The Antisocial Network, this project reflects how pace shapes perception.
+      </p>
+      <a class="primary-btn" href="feed.html">Enter the Feed</a>
     </div>
-  </header>
-  <div class="mood-avatar" id="mood-avatar" aria-live="polite">
-    <!-- <span class="mood-emoji" id="mood-emoji">😐</span>
-    <span class="mood-label" id="mood-label">Neutral</span> -->
-  </div>
-
-  <main class="page">
-    <div class="feed-header">
-      <div>
-        <div class="feed-title">Live feed</div>
-      </div>
-      <div class="feed-dot">∞</div>
-    </div>
-    <div id="feed" class="feed-column" aria-label="Feed reacting to scroll speed"></div>
-  </main>
-
-  <aside class="speed-meter" aria-hidden="true">
-    <div class="speed-row">
-      <div class="speed-label">Scroll speed</div>
-      <div class="speed-value" id="speed-value">0.00 px/ms</div>
-    </div>
-    <div class="speed-bar-track">
-      <div class="speed-bar-fill" id="speed-bar"></div>
-    </div>
-    <div class="speed-caption" id="speed-caption">
-      <span>Neutral</span>
-    </div>
-  </aside>
-  <script src="script.js"></script>
+  </section>
 </body>
 </html>

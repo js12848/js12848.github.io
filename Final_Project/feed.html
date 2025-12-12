@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Re-Seeing the Web – Feed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="mode-neutral">
+  <header>
+    <div class="top-bar">
+      <div class="top-left">
+        <div class="top-title"><a class="home-link" href="index.html">← Home</a></div>
+        <div class="top-tagline">Ambient stream in motion.</div>
+      </div>
+      <div class="mode-pill" id="mode-pill" data-mode="neutral">
+        <span class="mode-dot"></span>
+        <div>
+          <div class="mode-label" id="mode-label">Neutral</div>
+          <div class="mode-extra" id="mode-extra">Listening</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="feed-header">
+      <div>
+        <div class="feed-title">Live feed</div>
+      </div>
+      <div class="feed-dot">∞</div>
+    </div>
+    <div id="feed" class="feed-column" aria-label="Feed reacting to scroll speed"></div>
+  </main>
+
+  <aside class="speed-meter" aria-hidden="true">
+    <div class="speed-row">
+      <div class="speed-label">Scroll speed</div>
+      <div class="speed-value" id="speed-value">0.00 px/ms</div>
+    </div>
+    <div class="speed-bar-track">
+      <div class="speed-bar-fill" id="speed-bar"></div>
+    </div>
+      <div class="speed-caption" id="speed-caption">
+        <span>Neutral</span>
+      </div>
+    </aside>
+  <button id="new-reflection-btn" type="button">New Reflection</button>
+  <div id="composer-overlay" class="hidden">
+    <div class="composer-panel" role="dialog" aria-modal="true" aria-label="Add a reflection">
+      <button class="close-composer" id="close-composer" aria-label="Close">✕</button>
+      <div class="composer-label">Add a reflection</div>
+      <p class="composer-helper">Write how the feed feels at this pace.</p>
+      <form id="composer-form" class="composer-form">
+        <input
+          id="composer-title"
+          class="composer-input"
+          type="text"
+          placeholder="Title (optional)"
+          aria-label="Reflection title"
+        />
+        <textarea
+          id="composer-body"
+          class="composer-input"
+          rows="4"
+          placeholder="What are you noticing?"
+          aria-label="Reflection text"
+          required
+        ></textarea>
+        <div class="composer-actions">
+          <button class="secondary-btn" id="cancel-composer" type="button">Cancel</button>
+          <button class="primary-btn" type="submit">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
